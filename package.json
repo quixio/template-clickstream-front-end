@@ -2,11 +2,11 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "vercel env pull .env && ng serve",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "vercel-build": "vercel env pull .env --environment=production && ng build"
+    "vercel-build": "ng build"
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",
