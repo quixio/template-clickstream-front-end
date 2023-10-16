@@ -6,7 +6,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "vercel-build": "ng build"
+    "vercel-pull": "vercel env pull .env"
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",
