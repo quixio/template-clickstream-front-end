@@ -6,7 +6,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "vercel-build": "ng build --prod"
+    "vercel-build": "npm run build:ssr"
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",
