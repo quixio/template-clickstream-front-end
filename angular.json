@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-vercel": {
+    "template-clickstream-front-end": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
             "customWebpackConfig": {
               "path": "src/custom-webpack.config.ts"
             },
-            "outputPath": "dist/angular-vercel",
+            "outputPath": "dist/template-clickstream-front-end",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -60,10 +60,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-vercel:build:production"
+              "browserTarget": "template-clickstream-front-end:build:production"
             },
             "development": {
-              "browserTarget": "angular-vercel:build:development"
+              "browserTarget": "template-clickstream-front-end:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-vercel:build"
+            "browserTarget": "template-clickstream-front-end:build"
           }
         },
         "test": {
