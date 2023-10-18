@@ -2,14 +2,10 @@
 $font-family:   (Inter, "Helvetica Neue", sans-serif);
 $quix-template-typography-config: mat.define-typography-config(
   $font-family:   $font-family,
-  $headline-1:    mat.define-typography-level(32px, 40px, 500, $font-family), // H1
-  $headline-2:    mat.define-typography-level(24px, 30px, 500, $font-family), // H2
-  $headline-3:    mat.define-typography-level(18px, 24px, 500, $font-family), // H3
-  $headline-4:    mat.define-typography-level(16px, 24px, 500, $font-family), // H4
-  $headline-5:    mat.define-typography-level(16px, 24px, 600, $font-family), // H5
-  $headline-6:    mat.define-typography-level(14px, 20px, 600, $font-family), // H6
-  $subtitle-1:    mat.define-typography-level(12px, 20px, 600, $font-family),
-  $subtitle-2:    mat.define-typography-level(10px, 18px, 600, $font-family),
+  $headline-5:    mat.define-typography-level(32px, 40px, 500, $font-family), // H1
+  $headline-6:    mat.define-typography-level(24px, 30px, 500, $font-family), // H2
+  $subtitle-1:    mat.define-typography-level(18px, 24px, 500, $font-family), // H3
+  $subtitle-2:    mat.define-typography-level(18px, 24px, 500, $font-family), // H4
   $body-1:        mat.define-typography-level(16px, 24px, 400, $font-family), // Body 1
   $body-2:        mat.define-typography-level(14px, 20px, 400, $font-family), // Body 2
   $caption:       mat.define-typography-level(12px, 20px, 400, $font-family), // Caption

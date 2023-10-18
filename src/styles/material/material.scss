@@ -7,7 +7,8 @@
 
 @include mat.core();
 
-// Use the default configuration.
+// Include CSS classes for styling your application.
+// These CSS classes correspond to the typography levels in your typography config.
 @include mat.typography-hierarchy($quix-template-typography-config);
 
 // Include theme and typography styles for core and each component used in your app.
@@ -20,7 +21,8 @@
 @include mat.divider-theme($quix-template-theme);
 @include mat.progress-spinner-theme($quix-template-theme);
 @include mat.toolbar-theme($quix-template-theme);
-
+@include mat.checkbox-theme($quix-template-theme);
+@include mat.dialog-theme($quix-template-theme);
 
 // Plus custom imports.
 @import 'material-overrides';
