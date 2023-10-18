@@ -1,1 +1,34 @@
-<router-outlet></router-outlet>
+<mat-drawer-container class="example-container mat-typography">
+  <mat-drawer-content>
+    <header>
+      <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <a routerLink="/lobby" routerLinkActive="active" class="logo">
+            <img src="assets/quix-logo.svg" alt="Quix" height="32" />
+          </a>
+          <span [style.fontSize.px]="18" class="ms-2 mt-2">TEMPLATES</span>
+        </div>
+        <div fxLayout="row" fxHide.xs>
+          <a mat-raised-button color="primary" class="small me-2"
+            [href]=""
+            target="_blank">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
+              <span>Look under the hood</span>
+            </div>
+          </a>
+          <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
+            href="https://github.com/quixio/computer-vision-demo" target="_blank">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
+              <span>View repo</span>
+            </div>
+          </a>
+        </div>
+      </mat-toolbar>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
