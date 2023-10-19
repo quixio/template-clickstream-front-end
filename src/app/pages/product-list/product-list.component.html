@@ -1,15 +1,15 @@
-<div fxLayout="row" class="p-3">
-  <div fxFlex="200px">
+<div fxLayout="row">
+  <div fxFlex="200px" class="ps-5 py-3">
     <p class="fw-bold">Categories</p>
     <form [formGroup]="form">
       <div formArrayName="categories" *ngFor="let control of formArray.controls; let i = index">
         <mat-checkbox [formControl]="control">
-          <span class="text-capitalize">{{ categories[i] }}</span>
+          <span>{{ categories[i] | titlecase }}</span>
         </mat-checkbox>
       </div>
     </form>
   </div>
-  <div class="overflow-hidden">
+  <div fxFlex class="px-5 overflow-hidden">
     <div fxLayout="row wrap" class="me-n3 mb-n3">
       <div fxFlex="25" *ngFor="let product of products" class="pe-3 pb-3 cursor-pointer" [routerLink]="product.id">
         <div [style.min-height.px]="200" class="bg-light" fxLayout="column" fxLayoutAlign="center center">

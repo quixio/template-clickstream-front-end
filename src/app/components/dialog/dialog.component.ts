@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-dialog',
@@ -7,15 +8,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent implements OnInit {
-  userName: string;
+  user: User;
 
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    @Inject(MAT_DIALOG_DATA) private data: User,
   ) {}
 
   ngOnInit(): void {
-    this.userName = this.data.name
+    this.user = this.data
   }
 
   close(): void {

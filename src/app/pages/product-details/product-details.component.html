@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutGap="50px" class="m-5" *ngIf="product; else notFound">
   <img fxFlex="50" [src]="product.image" [alt]="product.title">
   <div>
-    <p class="mat-caption text-muted text-capitalize mb-1">{{ product.category }}</p>
+    <p class="mat-caption text-muted mb-1">{{ product.category | titlecase }}</p>
     <h2 class="fw-normal">{{ product.title }}</h2>
     <p>{{ product.description }}</p>
     <p class="mat-h2 fw-bold">€{{ product.price | number: '1.2-2' }}</p>

@@ -18,7 +18,7 @@
             </div>
           </a>
           <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
-            href="https://github.com/quixio/computer-vision-demo" target="_blank">
+            href="https://github.com/quixio/template-clickstream-front-end" target="_blank">
             <div fxLayout="row" fxLayoutAlign="center center">
               <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
               <span>View repo</span>
@@ -27,8 +27,40 @@
         </div>
       </mat-toolbar>
     </header>
-    <main>
-      <router-outlet></router-outlet>
+    <main fxLayout="row">
+      <div fxLayout="column" fxFlex="480px" class="overflow-auto p-5 mat-elevation-z4" [style.zIndex]="1">
+        <div class="mb-5">
+          <h1 class="mb-1">Clickstream</h1>
+          <p class="mb-3 text-body text-uppercase">Project template</p>
+          <p class="mat-body">Use Quix to derive events from clickstream data and react to those events</p>
+          <div fxLayout="row">
+            <a mat-raised-button color="primary" class="small me-2" fxLayout="row" fxLayoutAlign="center center"
+              [href]=""
+              target="_blank">
+              <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
+              <span>Look under the hood</span>
+            </a>
+            <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
+              href="https://github.com/quixio/template-clickstream-front-end" target="_blank">
+              <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
+              <span>View repo</span>
+            </a>
+          </div>
+        </div>
+        <div class="mb-5">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Users</mat-label>
+            <mat-select [value]="users[0]" (selectionChange)="selectedUserChanged($event.value)">
+              <mat-option *ngFor="let user of users; let i = index" [value]="user">
+                User {{ i + 1 }}: {{ user.gender | gender }}, {{ user.birthDate | age }} years
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlex class="overflow-auto">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </mat-drawer-content>
 </mat-drawer-container>
