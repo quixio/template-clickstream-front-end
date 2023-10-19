@@ -18,7 +18,6 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dialog: MatDialog,
     private quixService: QuixService,
     private dataService: DataService
   ) { }
@@ -28,31 +27,26 @@ export class ProductDetailsComponent implements OnInit {
     this.product = PRODUCTS.find((f) => f.id === productId);
 
     this.quixService.writerConnStatusChanged$.subscribe((_) => {
-      if (this.product) this.sendData(this.product);
+      this.sendData();
     });
 
-    setTimeout(() => this.openDialog(), 1000);
+    setTimeout(() => this.dataService.openDialog(), 1000);
   }
 
-  openDialog(): void {
-    this.dialog.open(DialogComponent, {
-      width: '500px',
-      data: this.dataService.user,
-    });
-  }
 
-  sendData(product: Product): void {
+
+  sendData(): void {
+    if (!this.product) return;
     const payload: Data = {
       timestamps: [new Date().getTime() * 1000000],
       stringValues: {
         'userId': [this.dataService.user.userId],
         'ip': [this.dataService.userIp],
         'userAgent': [navigator.userAgent],
-        'productId': [product.id],
-        'category': [product.category],
+        'productId': [this.product.id],
       }
     };
-    const topicId = this.quixService.workspaceId + '-' + this.quixService.topicName;
+    const topicId = this.quixService.workspaceId + '-' + this.quixService.clickTopic;
     this.quixService.sendParameterData(topicId, this.dataService.user.userId, payload);
   }
 }

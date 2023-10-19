@@ -24,7 +24,8 @@ export class QuixService {
   private workingLocally = false; // set to true if working locally
   private token: string = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1qVTBRVE01TmtJNVJqSTNOVEpFUlVSRFF6WXdRVFF4TjBSRk56SkNNekpFUWpBNFFqazBSUSJ9.eyJodHRwczovL3F1aXguYWkvb3JnX2lkIjoiZGVtbyIsImh0dHBzOi8vcXVpeC5haS9vd25lcl9pZCI6ImF1dGgwfGM1NzNiNzdiLTczYTUtNGU3OS05MjJlLTRiMDM5YTk3NGQ0NCIsImh0dHBzOi8vcXVpeC5haS90b2tlbl9pZCI6ImZjMjI2NWI2LWZiMzQtNDYyOC05ZDU3LWQ4ODAwYmI3MmE5NyIsImh0dHBzOi8vcXVpeC5haS9leHAiOiIxNzExODM5NjAwIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnF1aXguYWkvIiwic3ViIjoiOUdwcno3WE51V3VxQ0Fxb0cwa09JQTAyMUNSOFZmRUVAY2xpZW50cyIsImF1ZCI6InF1aXgiLCJpYXQiOjE2OTY5MjgyNTYsImV4cCI6MTY5OTUyMDI1NiwiYXpwIjoiOUdwcno3WE51V3VxQ0Fxb0cwa09JQTAyMUNSOFZmRUUiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6W119.CTI9ohxNx9Jsu1yLkfZjww4cQWL8mjRMsattMnno7SwC5qJiER5CuV6AGxLOBOfgZR3W67QdO9VrZN9pr8qgvFJ-I0rH1qtXRMGsnrYAGko5NDpswd96bF8jsmxDxkCqdNztrCOELYBlC35hCfrfTdzYGYAwMIWdk0K5H6kGV1mkMEffM0wj_z8FAP-1s8h7_GkWCFZ8HdA4z7fLLjYFXPxzPUOodZktpj5QuluS1gpVjfuN-nm3787T7H7n3hS_Jdwtwp8QhseWoPRJikJBYKhI6FIRQQHvuEyPkBQSpKbIFW9dyK2TlrHqEFAGRRv3p63oovPU0H34SNIgeFSL4g'; // Create a token in the Tokens menu and paste it here
   public workspaceId: string = 'demo-clickstream-dev'; // Look in the URL for the Quix Portal your workspace ID is after 'workspace='
-  public topicName: string = 'click-data'; // get topic name from the Topics page in the Quix portal
+  public clickTopic: string = 'click-data'; // get topic name from the Topics page in the Quix portal
+  public offersTopic: string = 'special-offers'; // get topic name from the Topics page in the Quix portal
   /* optional */
   /*~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-*/
 
@@ -64,18 +65,21 @@ export class QuixService {
       let bearerToken$ = this.httpClient.get(this.server + 'bearer_token', { headers, responseType: 'text' });
       let workspaceId$ = this.httpClient.get(this.server + 'workspace_id', { headers, responseType: 'text' });
       let portalApi$ = this.httpClient.get(this.server + 'portal_api', { headers, responseType: 'text' })
-      let topic$ = this.httpClient.get(this.server + 'throttle', { headers, responseType: 'text' });
+      let clickTopic$ = this.httpClient.get(this.server + 'click_topic', { headers, responseType: 'text' });
+      let offersTopic$ = this.httpClient.get(this.server + 'offers_topic', { headers, responseType: 'text' });
 
       combineLatest([
         // General
         bearerToken$,
         workspaceId$,
         portalApi$,
-        topic$
-      ]).subscribe(([bearerToken, workspaceId, portalApi, topic]) => {
+        clickTopic$,
+        offersTopic$
+      ]).subscribe(([bearerToken, workspaceId, portalApi, clickTopic, offersTopic]) => {
         this.token = this.stripLineFeed(bearerToken);
         this.workspaceId = this.stripLineFeed(workspaceId);
-        this.topicName = this.stripLineFeed(topic);
+        this.clickTopic = this.stripLineFeed(clickTopic);
+        this.offersTopic = this.stripLineFeed(offersTopic);
 
         // work out what domain the portal api is on:
         portalApi = portalApi.replace("\n", "");
@@ -208,6 +212,19 @@ export class QuixService {
   }
 
   /**
+   * Subscribes to a event on the ReaderHub connection so
+   * we can listen to changes.
+   *
+   * @param topic The topic being wrote to.
+   * @param streamId The id of the stream.
+   * @param eventId The event want to listen for changes.
+   */
+  public subscribeToEvent(topic: string, streamId: string, eventId: string) {
+    // console.log(`QuixService Reader | Subscribing to event - ${topic}, ${streamId}, ${eventId}`);
+    this.readerHubConnection.invoke("SubscribeToEvent", topic, streamId, eventId);
+  }
+
+  /**
    * Unsubscribe from a parameter on the ReaderHub connection
    * so we no longer recieve changes.
    *
@@ -221,6 +238,19 @@ export class QuixService {
   }
 
   /**
+   * Unsubscribe from a event on the ReaderHub connection
+   * so we no longer recieve changes.
+   *
+   * @param topic
+   * @param streamId
+   * @param eventId
+   */
+  public unsubscribeFromEvent(topic: string, streamId: string, eventId: string) {
+    // console.log(`QuixService Reader | Unsubscribing from event - ${topic}, ${streamId}, ${eventId}`);
+    this.readerHubConnection.invoke("UnsubscribeFromEvent", topic, streamId, eventId);
+  }
+
+  /**
    * Sends parameter data to Quix using the WriterHub connection.
    *
    * @param topic The name of the topic we are writing to.
@@ -231,7 +261,6 @@ export class QuixService {
     // console.log("QuixService Sending parameter data!", topic, streamId, payload);
     this.writerHubConnection.invoke("SendParameterData", topic, streamId, payload);
   }
-
 
   /**
    * Uses the telemetry data api to retrieve persisted parameter

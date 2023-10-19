@@ -3,7 +3,7 @@
 .mat-mdc-flat-button {
   font-size: 18px;
   min-width: 80px;
-  line-height: 40px;
+  height: 40px;
 
   &.small {
     font-size: 14px;
@@ -32,4 +32,9 @@
       }
     }
   }
+}
+
+// Checkbox
+.mdc-checkbox__ripple {
+  display: none;
 }

@@ -3,7 +3,7 @@
     <p class="fw-bold">Categories</p>
     <form [formGroup]="form">
       <div formArrayName="categories" *ngFor="let control of formArray.controls; let i = index">
-        <mat-checkbox [formControl]="control">
+        <mat-checkbox [formControl]="control" [disableRipple]="true">
           <span>{{ categories[i] | titlecase }}</span>
         </mat-checkbox>
       </div>
