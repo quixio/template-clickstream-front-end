@@ -17,7 +17,7 @@ export class DataService {
   }
 
   getIpAddress(): void {
-    this.http.get("http://api.ipify.org/?format=json").pipe(map((m: any) => m.ip)).subscribe((ip) => {
+    this.http.get("https://api.ipify.org/?format=json").pipe(map((m: any) => m.ip)).subscribe((ip) => {
       this.userIp = ip;
     });
   }
