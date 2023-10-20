@@ -2,11 +2,6 @@ mat-drawer-container {
   height: calc(100% - 64px);
 }
 
-mat-drawer-content {
-  display: flex;
-  flex-direction: column;
-}
-
 mat-toolbar {
   background-color: #0a0b24;
   color: white;
