@@ -11,7 +11,6 @@ import { ConnectionStatus, QuixService } from './services/quix.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title: string = environment.API_KEY || 'DEF_A';
   users: User[] = USERS;
   selectedUser: User;
 

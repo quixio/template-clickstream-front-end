@@ -4,7 +4,10 @@
 
 export const environment = {
 	isProduction: false,
-  API_KEY: process.env["API_KEY"] || 'DEF_A'
+  TOKEN: process.env["TOKEN"],
+  WORKSPACE_ID: process.env["WORKSPACE_ID"],
+  CLICK_TOPIC: process.env["CLICK_TOPIC"],
+  OFFERS_TOPIC: process.env["OFFERS_TOPIC"]
 };
 
 /*
