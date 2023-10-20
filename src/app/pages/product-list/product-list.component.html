@@ -19,13 +19,16 @@
       </form>
     </div>
   </mat-drawer>
-  <mat-drawer-content class="px-5 pt-4">
-    <div fxLayout="row wrap" class="me-n3 mb-n3">
-      <div [fxFlex.sm]="(isMainSidenavOpen$ | async) ? 50 : 25" fxFlex.md="33.33" fxFlex.gt-md="25" *ngFor="let product of products" class="pe-3 pb-3 cursor-pointer" [routerLink]="product.id">
-        <img [src]="'assets/products/' + product.image" [alt]="product.title" class="w-100">
-        <div class="mt-2">
-          <p class="mb-2 text-body">{{ product.title }}</p>
-          <p class="fw-bold">€{{ product.price | number: '1.2-2' }}</p>
+  <mat-drawer-content>
+    <div class="px-5 pt-4">
+      <div fxLayout="row wrap" class="me-n3 mb-n3">
+        <div [fxFlex.sm]="(isMainSidenavOpen$ | async) ? 50 : 25" fxFlex.md="33.33" fxFlex.md="25" fxFlex.lg="20" fxFlex.gt-lg="16.66"
+          *ngFor="let product of products" class="pe-3 pb-3 cursor-pointer" [routerLink]="product.id">
+          <img [src]="'assets/products/' + product.image" [alt]="product.title" class="w-100">
+          <div class="mt-2">
+            <p class="mb-2 text-body">{{ product.title }}</p>
+            <p class="fw-bold">€{{ product.price | number: '1.2-2' }}</p>
+          </div>
         </div>
       </div>
     </div>

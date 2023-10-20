@@ -38,3 +38,8 @@
 .mdc-checkbox__ripple {
   display: none;
 }
+
+// Toolbar
+mat-toolbar {
+  height: 64px !important;
+}
