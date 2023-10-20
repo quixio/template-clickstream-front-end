@@ -1,5 +1,5 @@
 mat-drawer-container {
-  height: 100%;
+  height: calc(100% - 64px);
 }
 
 mat-drawer-content {
@@ -10,9 +10,4 @@ mat-drawer-content {
 mat-toolbar {
   background-color: #0a0b24;
   color: white;
-  height: 64px;
-}
-
-main {
-  height: calc(100% - 64px);
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@microsoft/signalr';
-import { Observable, Subject, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Data } from '../models/data';
 import { environment } from 'src/environments/environment';
 
@@ -41,9 +41,9 @@ export class QuixService {
   public readerHubConnection: HubConnection;
   public writerHubConnection: HubConnection;
 
-  private readerConnStatusChanged = new Subject<ConnectionStatus>();
+  private readerConnStatusChanged = new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
   readerConnStatusChanged$ = this.readerConnStatusChanged.asObservable();
-  private writerConnStatusChanged = new Subject<ConnectionStatus>();
+  private writerConnStatusChanged = new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
   writerConnStatusChanged$ = this.writerConnStatusChanged.asObservable();
 
   paramDataReceived = new Subject<Data>();

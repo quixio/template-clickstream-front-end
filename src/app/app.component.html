@@ -1,70 +1,75 @@
-<mat-drawer-container class="example-container">
-  <mat-drawer-content>
-    <header>
-      <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-        <div>
-          <a routerLink="/" routerLinkActive="active" class="logo">
-            <img src="assets/quix-logo.svg" alt="Quix" height="32" />
-          </a>
-          <span [style.fontSize.px]="18" class="ms-2 mt-2">TEMPLATES</span>
+<header>
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <a routerLink="/" routerLinkActive="active" class="logo">
+        <img src="assets/quix-logo.svg" alt="Quix" height="32" />
+      </a>
+      <span [style.fontSize.px]="18" class="ms-2 mt-2">TEMPLATES</span>
+    </div>
+    <button mat-icon-button fxHide.gt-sm (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div fxLayout="row wrap" fxHide.lt-md>
+      <a mat-raised-button color="primary" class="small me-2"
+        [href]=""
+        target="_blank">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
+          <span>Look under the hood</span>
         </div>
-        <div fxLayout="row" fxHide.xs>
-          <a mat-raised-button color="primary" class="small me-2"
+      </a>
+      <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
+        href="https://github.com/quixio/template-clickstream-front-end" target="_blank">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
+          <span>View repo</span>
+        </div>
+      </a>
+    </div>
+  </mat-toolbar>
+</header>
+<mat-drawer-container>
+  <mat-drawer mode="side" fxLayout="column" fxFlex.xs="100" fxFlex.sm="50" fxFlex.gt-sm="480px"
+    [opened]="!media.isActive(['sm', 'xs'])" class="mat-elevation-z4"
+      (openedChange)="toggleSidenav($event)" #sidenav>
+    <div class="p-5">
+      <div class="mb-5">
+        <h1 class="mb-1">Clickstream</h1>
+        <p class="mb-3 text-body text-uppercase">Project template</p>
+        <p class="mat-body">Use Quix to derive events from clickstream data and react to those events</p>
+        <div fxLayout="row">
+          <a mat-raised-button color="primary" class="small me-2" fxLayout="row" fxLayoutAlign="center center"
             [href]=""
             target="_blank">
-            <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="start center">
               <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
-              <span>Look under the hood</span>
+              <span class="text-nowrap">Look under the hood</span>
             </div>
           </a>
           <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
             href="https://github.com/quixio/template-clickstream-front-end" target="_blank">
-            <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="start center">
               <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
-              <span>View repo</span>
+              <span class="text-nowrap">View repo</span>
             </div>
           </a>
         </div>
-      </mat-toolbar>
-    </header>
-    <main fxLayout="row">
-      <div fxLayout="column" fxFlex="480px" class="overflow-auto p-5 mat-elevation-z4" [style.zIndex]="1">
-        <div class="mb-5">
-          <h1 class="mb-1">Clickstream</h1>
-          <p class="mb-3 text-body text-uppercase">Project template</p>
-          <p class="mat-body">Use Quix to derive events from clickstream data and react to those events</p>
-          <div fxLayout="row">
-            <a mat-raised-button color="primary" class="small me-2" fxLayout="row" fxLayoutAlign="center center"
-              [href]=""
-              target="_blank">
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
-                <span>Look under the hood</span>
-              </div>
-            </a>
-            <a mat-raised-button color="accent" class="small" fxLayout="row" fxLayoutAlign="center center"
-              href="https://github.com/quixio/template-clickstream-front-end" target="_blank">
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <img src="assets/github.svg" alt="Quix" height="16" class="me-2" />
-                <span>View repo</span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="mb-5">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Users</mat-label>
-            <mat-select [value]="users[0]" (selectionChange)="selectedUserChanged($event.value)">
-              <mat-option *ngFor="let user of users; let i = index" [value]="user">
-                User {{ i + 1 }}: {{ user.gender | gender }}, {{ user.birthDate | age }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
       </div>
-      <div fxFlex class="overflow-auto">
-        <router-outlet></router-outlet>
+      <div class="mb-5">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Users</mat-label>
+          <mat-select [value]="users[0]" (selectionChange)="selectedUserChanged($event.value)">
+            <mat-option *ngFor="let user of users; let i = index" [value]="user">
+              User {{ i + 1 }}: {{ user.gender | gender }}, {{ user.birthDate | age }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </main>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="h-100">
+      <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

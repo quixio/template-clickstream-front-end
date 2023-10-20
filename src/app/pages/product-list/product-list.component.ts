@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription, map, of } from 'rxjs';
 import { PRODUCTS } from 'src/app/constants/products';
 import { Categories } from 'src/app/models/categories';
 import { Product } from 'src/app/models/product';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -15,8 +17,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
   formArray = new FormArray<FormControl<boolean>>([]);
   form = new FormGroup ({ categories: this.formArray });
   subscription: Subscription;
+  isMainSidenavOpen$: Observable<boolean>;
 
-  constructor() {}
+  constructor(public media: MediaObserver, private dataService: DataService) {}
 
   ngOnInit(): void {
     this.categories.forEach(() => this.formArray.push(new FormControl()));
@@ -28,6 +31,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
         return PRODUCTS.filter((f) => selectedCategories.includes(f.category))
       })))
       .subscribe((products) => this.products = products)
+
+    this.isMainSidenavOpen$ = this.dataService.isSidenavOpen$.asObservable()
   }
 
   ngOnDestroy(): void {

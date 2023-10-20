@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, map } from 'rxjs';
 import { DialogComponent } from '../components/dialog/dialog.component';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { DialogComponent } from '../components/dialog/dialog.component';
 export class DataService {
   user: User;
   userIp: string;
+  isSidenavOpen$ = new Subject<boolean>();
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.getIpAddress();
@@ -26,6 +27,7 @@ export class DataService {
     this.dialog.open(DialogComponent, {
       width: '500px',
       data: this.user,
+      backdropClass: 'bg-transparent'
     });
   }
 }

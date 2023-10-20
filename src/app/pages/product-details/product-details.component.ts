@@ -1,20 +1,22 @@
+import { Subscription } from 'rxjs';
 import { DataService } from './../../services/data.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PRODUCTS } from 'src/app/constants/products';
 import { Product } from 'src/app/models/product';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { Data } from 'src/app/models/data';
-import { QuixService } from 'src/app/services/quix.service';
+import { ConnectionStatus, QuixService } from 'src/app/services/quix.service';
 
 
 @Component({
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: Product | undefined;
+  subscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,14 +28,11 @@ export class ProductDetailsComponent implements OnInit {
     const productId = this.route.snapshot.paramMap.get('id');
     this.product = PRODUCTS.find((f) => f.id === productId);
 
-    this.quixService.writerConnStatusChanged$.subscribe((_) => {
+    this.subscription = this.quixService.writerConnStatusChanged$.subscribe((status) => {
+      if (status !== ConnectionStatus.Connected) return;
       this.sendData();
     });
-
-    setTimeout(() => this.dataService.openDialog(), 1000);
   }
-
-
 
   sendData(): void {
     if (!this.product) return;
@@ -48,5 +47,9 @@ export class ProductDetailsComponent implements OnInit {
     };
     const topicId = this.quixService.workspaceId + '-' + this.quixService.clickTopic;
     this.quixService.sendParameterData(topicId, this.dataService.user.userId, payload);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
