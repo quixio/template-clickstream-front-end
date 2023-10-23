@@ -27,7 +27,7 @@ export class DataService {
 
   openDialog(data: EventData): void {
     this.dialog.open(DialogComponent, {
-      width: '500px',
+      width: '70vh',
       data,
       backdropClass: 'bg-transparent'
     });
