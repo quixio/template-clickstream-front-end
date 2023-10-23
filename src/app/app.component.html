@@ -58,7 +58,7 @@
       <div class="mb-5">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Users</mat-label>
-          <mat-select [value]="users[0]" (selectionChange)="selectedUserChanged($event.value)">
+          <mat-select [formControl]="userControl">
             <mat-option *ngFor="let user of users; let i = index" [value]="user">
               User {{ i + 1 }}: {{ user.gender | gender }}, {{ user.birthDate | age }}
             </mat-option>

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject, map } from 'rxjs';
 import { DialogComponent } from '../components/dialog/dialog.component';
 import { User } from '../models/user';
+import { EventData } from '../models/eventData';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,10 @@ export class DataService {
     });
   }
 
-  openDialog(): void {
+  openDialog(data: EventData): void {
     this.dialog.open(DialogComponent, {
       width: '500px',
-      data: this.user,
+      data,
       backdropClass: 'bg-transparent'
     });
   }

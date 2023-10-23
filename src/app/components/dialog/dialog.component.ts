@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { USERS } from 'src/app/constants/users';
+import { EventData } from 'src/app/models/eventData';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -8,18 +9,12 @@ import { User } from 'src/app/models/user';
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
-  userName: string;
+export class DialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private user: User,
+    @Inject(MAT_DIALOG_DATA) public data: EventData
   ) {}
-
-  ngOnInit(): void {
-    const index = USERS.indexOf(this.user) + 1
-    this.userName = `User ${index}`;
-  }
 
   close(): void {
     this.dialogRef.close();

@@ -10,7 +10,6 @@ import { MaterialModule } from './modules/material.module';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { ProductHomeComponent } from './pages/product-home/product-home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AgePipe } from './pipes/age.pipe';
 import { GenderPipe } from './pipes/gender.pipe';
@@ -21,7 +20,6 @@ import { GenderPipe } from './pipes/gender.pipe';
     ProductDetailsComponent,
     ProductListComponent,
     DialogComponent,
-    ProductHomeComponent,
     AgePipe,
     GenderPipe
   ],

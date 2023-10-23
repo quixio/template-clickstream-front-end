@@ -2,8 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@microsoft/signalr';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { Data } from '../models/data';
 import { environment } from 'src/environments/environment';
+import { EventData } from '../models/eventData';
+import { ParameterData } from '../models/parameterData';
+import { Data } from '../models/data';
 
 export enum ConnectionStatus {
   Connected = 'Connected',
@@ -46,10 +48,10 @@ export class QuixService {
   private writerConnStatusChanged = new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
   writerConnStatusChanged$ = this.writerConnStatusChanged.asObservable();
 
-  paramDataReceived = new Subject<Data>();
+  paramDataReceived = new Subject<ParameterData>();
   paramDataReceived$ = this.paramDataReceived.asObservable();
 
-  eventDataReceived = new Subject<Data>();
+  eventDataReceived = new Subject<EventData>();
   eventDataReceived$ = this.eventDataReceived.asObservable();
 
   private domainRegex = new RegExp(
@@ -70,7 +72,6 @@ export class QuixService {
       let offersTopic$ = this.httpClient.get(this.server + 'offers_topic', { headers, responseType: 'text' });
 
       combineLatest([
-        // General
         bearerToken$,
         workspaceId$,
         portalApi$,
@@ -170,12 +171,12 @@ export class QuixService {
    */
   private setupReaderHubListeners(readerHubConnection: HubConnection): void {
     // Listen for parameter data and emit
-    readerHubConnection.on("ParameterDataReceived", (payload: Data) => {
+    readerHubConnection.on("ParameterDataReceived", (payload: ParameterData) => {
       this.paramDataReceived.next(payload);
     });
 
     // Listen for event data and emit
-    readerHubConnection.on("EventDataReceived", (payload: Data) => {
+    readerHubConnection.on("EventDataReceived", (payload: EventData) => {
       this.eventDataReceived.next(payload);
     });
   }
@@ -258,7 +259,7 @@ export class QuixService {
    * @param streamId The id of the stream.
    * @param payload The payload of data we are sending.
    */
-  public sendParameterData(topic: string, streamId: string, payload: any): void {
+  public sendParameterData(topic: string, streamId: string, payload: Data): void {
     // console.log("QuixService Sending parameter data!", topic, streamId, payload);
     this.writerHubConnection.invoke("SendParameterData", topic, streamId, payload);
   }
@@ -270,8 +271,8 @@ export class QuixService {
    * @param payload The payload that we are querying with.
    * @returns The persisted parameter data.
    */
-  public retrievePersistedParameterData(payload: any): Observable<Data> {
-    return this.httpClient.post<Data>(
+  public retrievePersistedParameterData(payload: any): Observable<ParameterData> {
+    return this.httpClient.post<ParameterData>(
       `https://telemetry-query-${this.workspaceId}.${this.subdomain}.quix.ai/parameters/data`,
       payload,
       {

@@ -1,8 +1,8 @@
 import { User } from "../models/user";
 
 export const USERS: User[] = [
-  { "userId": "0001BDD9-EABF-4D0D-81BD-D9EABFCD0D7D", "gender": "F", "birthDate": "1984-04-08T00:00:00" },
   { "userId": "00071AA7-86D2-4EB9-871A-A786D27EB9BA", "gender": "F", "birthDate": "1988-02-07T00:00:00" },
+  { "userId": "0001BDD9-EABF-4D0D-81BD-D9EABFCD0D7D", "gender": "F", "birthDate": "1984-04-08T00:00:00" },
   { "userId": "00071B7D-31AF-4D85-871B-7D31AFFD852E", "gender": "F", "birthDate": "1964-10-22T00:00:00" },
   { "userId": "0007967E-F188-4598-9C7C-E64390482CFB", "gender": "M", "birthDate": "1966-06-01T00:00:00" },
   { "userId": "000B90B2-92DC-4A7A-8B90-B292DC9A7A71", "gender": "M", "birthDate": "1984-06-13T00:00:00" },

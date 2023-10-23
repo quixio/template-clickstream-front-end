@@ -1,13 +1,14 @@
-import { Subscription } from 'rxjs';
-import { DataService } from './../../services/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { Subscription, delay } from 'rxjs';
 import { PRODUCTS } from 'src/app/constants/products';
 import { Product } from 'src/app/models/product';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
-import { Data } from 'src/app/models/data';
 import { ConnectionStatus, QuixService } from 'src/app/services/quix.service';
+import { DataService } from './../../services/data.service';
+import { ParameterData } from 'src/app/models/parameterData';
+import { Data } from 'src/app/models/data';
+import { USERS } from 'src/app/constants/users';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -36,17 +37,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   sendData(): void {
     if (!this.product) return;
+    const user: User = this.dataService.user || USERS[0];
     const payload: Data = {
       timestamps: [new Date().getTime() * 1000000],
       stringValues: {
-        'userId': [this.dataService.user.userId],
+        'userId': [user.userId],
         'ip': [this.dataService.userIp],
         'userAgent': [navigator.userAgent],
         'productId': [this.product.id],
       }
     };
     const topicId = this.quixService.workspaceId + '-' + this.quixService.clickTopic;
-    this.quixService.sendParameterData(topicId, this.dataService.user.userId, payload);
+    this.quixService.sendParameterData(topicId, user.userId, payload);
   }
 
   ngOnDestroy(): void {
