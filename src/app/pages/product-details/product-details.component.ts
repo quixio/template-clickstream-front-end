@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, delay } from 'rxjs';
+import { Observable, Subscription, delay } from 'rxjs';
 import { PRODUCTS } from 'src/app/constants/products';
 import { Product } from 'src/app/models/product';
 import { ConnectionStatus, QuixService } from 'src/app/services/quix.service';
@@ -17,6 +17,7 @@ import { User } from 'src/app/models/user';
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: Product | undefined;
+  isMainSidenavOpen$: Observable<boolean>;
   subscription: Subscription;
 
   constructor(
@@ -33,6 +34,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       if (status !== ConnectionStatus.Connected) return;
       this.sendData();
     });
+
+    this.isMainSidenavOpen$ = this.dataService.isSidenavOpen$.asObservable();
   }
 
   sendData(): void {

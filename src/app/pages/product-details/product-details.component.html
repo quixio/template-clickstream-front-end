@@ -7,7 +7,8 @@
 </mat-toolbar>
 <mat-drawer-container>
   <mat-drawer-content class="w-100">
-    <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayoutAlign="start start"
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column"
+      [fxLayout.sm]="(isMainSidenavOpen$ | async) ? 'column' : 'row'" fxLayoutAlign="start start"
       fxLayoutGap="50px" fxLayoutGap.lt-lg="32px"
       [ngClass.gt-sm]="'m-5'" *ngIf="product; else notFound"
       class="px-5 pt-4">
