@@ -12,6 +12,7 @@ import { EventData } from '../models/eventData';
 export class DataService {
   user: User;
   userIp: string;
+  categorySelection: string[];
   isSidenavOpen$ = new Subject<boolean>();
 
   constructor(private http: HttpClient, private dialog: MatDialog) {

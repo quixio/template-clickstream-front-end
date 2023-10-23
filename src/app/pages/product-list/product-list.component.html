@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="center center" class="bg-white border-bottom">
-  <span class="cursor-pointer" routerLink="/">ACME</span>
+  <span class="cursor-pointer" routerLink="/" (click)="clearSelection()">ACME</span>
   <button mat-icon-button fxHide fxShow.xs [fxShow.sm]="(isMainSidenavOpen$ | async)" fxShow.md
     (click)="sidenav.toggle()" class="position-absolute end-0 me-3">
     <mat-icon>menu</mat-icon>
@@ -9,7 +9,15 @@
   <mat-drawer mode="side" fxLayout="column" fxFlex.xs="100" fxFlex.sm="50" fxFlex.gt-sm="200px" #sidenav
     [opened]="!media.isActive(['xs', 'md']) && !(media.isActive(['sm']) && (isMainSidenavOpen$ | async))">
     <div class="ps-5 pt-4">
-      <p class="fw-bold mt-2">Categories</p>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p class="fw-bold mt-2">Categories</p>
+        <button mat-button class="small text-body" (click)="clearSelection()" *ngIf="formArray.value.includes(true)">
+          <div fxLayout="row" fxLayout="start center">
+            <mat-icon inline>close</mat-icon>
+            <span class="mat-caption">clear</span>
+          </div>
+        </button>
+      </div>
       <form [formGroup]="form">
         <div formArrayName="categories" *ngFor="let control of formArray.controls; let i = index">
           <mat-checkbox [formControl]="control" [disableRipple]="true">

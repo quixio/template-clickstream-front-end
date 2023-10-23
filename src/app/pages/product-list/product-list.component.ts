@@ -14,25 +14,33 @@ import { DataService } from 'src/app/services/data.service';
 export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = PRODUCTS;
   categories: string[] = Object.values(Categories).sort();
-  formArray = new FormArray<FormControl<boolean>>([]);
-  form = new FormGroup ({ categories: this.formArray });
+  formArray = new FormArray<FormControl>([]);
+  form = new FormGroup({ categories: this.formArray });
   subscription: Subscription;
   isMainSidenavOpen$: Observable<boolean>;
 
-  constructor(public media: MediaObserver, private dataService: DataService) {}
+  constructor(public media: MediaObserver, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.categories.forEach(() => this.formArray.push(new FormControl()));
+    this.categories.forEach((category: string) => {
+      const value = this.dataService.categorySelection?.includes(category)
+      this.formArray.push(new FormControl(value));
+    });
 
-    this.subscription = this.formArray.valueChanges
-      .pipe(map(((values) => {
-        const selectedCategories = this.categories.filter((_, i) => values[i]);
-        if (!selectedCategories?.length) return PRODUCTS
-        return PRODUCTS.filter((f) => selectedCategories.includes(f.category))
-      })))
-      .subscribe((products) => this.products = products)
+    this.subscription = this.formArray.valueChanges.subscribe((values: boolean[]) => {
+      this.dataService.categorySelection = this.categories.filter((_, i) => values[i]);
+      if (!this.dataService.categorySelection?.length) this.products = PRODUCTS
+      else this.products = PRODUCTS.filter((f) => this.dataService.categorySelection.includes(f.category))
+    });
+
+    // Dispatch valueChanges to set the initial selection
+    this.formArray.updateValueAndValidity();
 
     this.isMainSidenavOpen$ = this.dataService.isSidenavOpen$.asObservable()
+  }
+
+  clearSelection(): void {
+    this.formArray.reset();
   }
 
   ngOnDestroy(): void {

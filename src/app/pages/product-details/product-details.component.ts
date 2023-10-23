@@ -54,6 +54,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.quixService.sendParameterData(topicId, user.userId, payload);
   }
 
+  clearSelection(): void {
+    this.dataService.categorySelection = [];
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
