@@ -16,10 +16,17 @@ import { EventData } from './models/eventData';
 export class AppComponent implements OnInit {
   users: User[] = USERS;
   userControl = new FormControl();
+  workspaceId: string;
+  deploymentId: string;
+  ungatedToken: string;
 
   constructor(private quixService: QuixService, private dataService: DataService, public media: MediaObserver) {}
 
   ngOnInit(): void {
+    this.workspaceId = this.quixService.workspaceId;
+    this.ungatedToken = this.quixService.ungatedToken;
+    this.deploymentId = environment.DEPLOYMENT_ID || '';
+
     this.quixService.eventDataReceived.subscribe((event: EventData) => {
       this.dataService.openDialog(event)
     });

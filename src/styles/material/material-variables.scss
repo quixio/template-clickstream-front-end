@@ -5,7 +5,7 @@ $quix-template-typography-config: mat.define-typography-config(
   $headline-5:    mat.define-typography-level(32px, 40px, 500, $font-family), // H1
   $headline-6:    mat.define-typography-level(24px, 30px, 500, $font-family), // H2
   $subtitle-1:    mat.define-typography-level(18px, 24px, 500, $font-family), // H3
-  $subtitle-2:    mat.define-typography-level(18px, 24px, 500, $font-family), // H4
+  $subtitle-2:    mat.define-typography-level(16px, 24px, 500, $font-family), // H4
   $body-1:        mat.define-typography-level(16px, 24px, 400, $font-family), // Body 1
   $body-2:        mat.define-typography-level(14px, 20px, 400, $font-family), // Body 2
   $caption:       mat.define-typography-level(12px, 20px, 400, $font-family), // Caption

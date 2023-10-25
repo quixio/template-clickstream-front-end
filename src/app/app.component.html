@@ -11,7 +11,7 @@
     </button>
     <div fxLayout="row wrap" fxHide.lt-md>
       <a mat-raised-button color="primary" class="small me-2"
-        [href]=""
+        [href]="'https://portal.platform.quix.ai/pipeline?workspace=' + workspaceId + '&token=' + ungatedToken"
         target="_blank">
         <div fxLayout="row" fxLayoutAlign="start center">
           <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
@@ -34,12 +34,14 @@
       (openedChange)="toggleSidenav($event)" #sidenav>
     <div class="p-5">
       <div class="mb-5">
-        <h1 class="mb-1">Clickstream</h1>
+        <h1 class="mb-1">Clickstream <br> Event Detection</h1>
         <p class="mb-3 text-body text-uppercase">Project template</p>
-        <p class="mat-body">Use Quix to derive events from clickstream data and react to those events</p>
+        <p class="mat-body-1">
+          Trigger events such as special offer popups based on real-time analysis of your click behavior.
+        </p>
         <div fxLayout="row">
           <a mat-raised-button color="primary" class="small me-2" fxLayout="row" fxLayoutAlign="center center"
-            [href]=""
+            [href]="'https://portal.platform.quix.ai/pipeline?workspace=' + workspaceId + '&token=' + ungatedToken"
             target="_blank">
             <div fxLayout="row" fxLayoutAlign="start center">
               <img src="assets/quix.svg" alt="Quix" height="12" class="me-2" />
@@ -55,7 +57,11 @@
           </a>
         </div>
       </div>
-      <div class="mb-5">
+      <div class="mb-3">
+        <h4 class="mb-2 mat-subtitle-2">Select an identity</h4>
+        <p class="text-body mb-3">
+          Choose a mock demographic profile which will be included in the clickstream analysis.
+        </p>
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Users</mat-label>
           <mat-select [formControl]="userControl">
@@ -64,6 +70,38 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+      <div class="mb-5">
+        <h4 class="mb-2 mat-subtitle-2">See if you can trigger a special offer</h4>
+        <p class="text-body mb-3">
+          Depending on your selected demographic profile and your click behavior, you can trigger a special offer popup.
+        </p>
+      </div>
+      <div>
+        <h4 class="mb-2 mat-subtitle-2">How the special offer triggers work</h4>
+        <div class="text-body">
+          <p>In the back end, the
+            <a target="_blank"
+              [href]="'https://portal.platform.quix.ai/pipeline/deployments/' + deploymentId + '?workspace=' + workspaceId + '&token=' + ungatedToken">
+              clickstream analysis service
+            </a>
+            looks for the following criteria:</p>
+          <p>If, in the last 5 minutes, a <i>female between 25-35 or a male between 36 and 45</i>:</p>
+          <ol>
+            <li>views any item in the <b>shoes</b> category then…</li>
+            <li>views any item in the <b>clothing</b> category then…</li>
+            <li>views a different item in the <b>shoes</b> category then:</li>
+          </ol>
+          <ul>
+            <li>Show a special offer for that demographic</li>
+          </ul>
+          <p>Try following this click pattern and see if you can trigger the special offer.</p>
+          <p>
+            To experiment with your own behavior detection patterns,
+            <b>fork this project template</b> and update Python code for the clickstream analysis.
+          </p>
+          <p>The same code can work on a massive scale with millions of users.</p>
+        </div>
       </div>
     </div>
   </mat-drawer>
